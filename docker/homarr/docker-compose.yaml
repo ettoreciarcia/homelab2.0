@@ -1,0 +1,16 @@
+version: '3'
+#---------------------------------------------------------------------#
+#     Homarr - A simple, yet powerful dashboard for your server.     #
+#---------------------------------------------------------------------#
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:0.11.1
+    restart: always
+    environment:
+      - TZ=Europe/Rome
+    volumes:
+      - ./configs:/app/data/configs
+      - ./icons:/app/public/icons
+    ports:
+      - '8082:7575'
