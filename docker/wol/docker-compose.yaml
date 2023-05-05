@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  frontend-rwsols:
+    image: ex0nuss/remote-wake-sleep-on-lan-docker
+    container_name: frontend-rwsols
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - APACHE2_PORT=8080
+      - PASSPHRASE=ciao
+      - RWSOLS_COMPUTER_NAME="Pc1"
+      - RWSOLS_COMPUTER_MAC=""
+      - RWSOLS_COMPUTER_IP="192.168.0.20"
