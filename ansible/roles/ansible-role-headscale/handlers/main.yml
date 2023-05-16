@@ -1,0 +1,14 @@
+---
+- name: Restart headscale service
+  service:
+    name: headscale
+    state: restarted
+    enabled: true
+    daemon-reload: true
+  listen: 'restart headscale'
+
+- name: Reload headscale
+  service:
+    name: headscale
+    state: reloaded
+  listen: 'reload headscale'
