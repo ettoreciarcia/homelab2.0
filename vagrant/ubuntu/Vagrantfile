@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+require_relative 'variables.rb'
+network = $network_cidr.split('/')[0].slice(0..-2) #Remove subnet mask (we will use chop method to remove the last ".")
+
+# Testing VM
+Vagrant.configure(2) do |config|
+  (1..1).each do |i|
+    config.vm.define "vm#{i}" do |s|
+      s.vm.box = $box_name
+      s.vm.box_version = $box_version
+      s.vm.hostname = "vm#{i}"
+      s.vm.network "public_network", ip: "#{network.chop}.18#{i}", auto_config: true, bridge: $network_to_bridge
+      ssh_pub_key = $public_key
+      s.vm.provision 'shell', inline: 'mkdir -p /root/.ssh'
+      s.vm.provision 'shell', inline: "echo #{ssh_pub_key} >> /root/.ssh/authorized_keys"
+      s.vm.provision 'shell', inline: "echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys", privileged: false
+      #s.vm.provision 'shell', inline: "apt update && apt install python3 -y"
+      s.vm.provider $provider do |v|
+        v.name = "tailscale#{i}"
+        v.memory = $memory
+      end
+    end
+  end
+end
