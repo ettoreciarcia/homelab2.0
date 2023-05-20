@@ -1,5 +1,5 @@
-$box_name = "ubuntu/trusty64"
-$box_version = "20190514.0.0"
+$box_name = "ubuntu/jammy64"
+$box_version = "20230518.0.0"
 $memory = 1024
 $provider = "virtualbox"
 $network_to_bridge = "en0: Wi-Fi"
