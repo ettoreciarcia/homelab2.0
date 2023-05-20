@@ -53,3 +53,53 @@ ___
 ## Virtual Machines
 
 ### Coming soon :)
+
+
+## Headscale
+
+Ansible role for Headscale (Open Source version of Tailscale)
+
+[Useful Link](https://techoverflow.net/2022/02/01/how-to-connect-tailscale-to-headscale-server-on-linux/)
+
+1. On the headscale server:
+
+```
+sudo headscale namespace create <NAMESPACE>
+```
+
+2. Then, from nodes
+
+```
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+```
+
+sudo tailscale up --login-server=http://<YOUR_DOMAIN>:8080/
+```
+
+3. This will prompt a link on the node
+
+```
+	http://127.0.0.1:8080/register/nodekey:<xxx>
+
+Success.
+
+```
+
+4. Visit this page from the server
+```
+curl http://127.0.0.1:8080/register/nodekey:<xxx>
+
+```
+
+5. You will find 
+
+```
+headscale -n NAMESPACE nodes register --key nodekey:<xxx>
+```
+
+
+Useful
+
+```headscale nodes list```
