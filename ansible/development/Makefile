@@ -6,5 +6,5 @@ clean:
 ping:
 	ansible all -m ping
 
-tailscale:
-	ansible-playbook -i tailscale.yml
+headscale:
+	ansible-playbook headscale.yml
