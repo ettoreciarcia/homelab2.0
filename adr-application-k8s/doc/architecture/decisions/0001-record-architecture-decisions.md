@@ -8,16 +8,33 @@ To discuss
 
 ## Context
 
-We need to record the process selecting the application that we will use as a workload for our clusters
+
+We need an application that allows us to test a workload on our Kubernetes cluster
 
 ## Decision
 
-We will use [testing-microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo)
+
+The possible options are
+
+### 1 **[Microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo) (From Google)**
+This one can be a good fit, It has pros which we will analyze later
+
+
+### 2 **Write our own application with a sample backend and frontend**
+Too much time consumption and in this phase we shouldn't waste energy reinventing the wheel.
+
+
+### 3 **[sock shop](https://github.com/microservices-demo/microservices-demo)**
+The project is inactive, no more features added.
+
+### 4 [httpbin.org](https://httpbin.org/)
+Just a sample webserver that reply with header sent in the request
+
+
+
+## Architecture of microservices-demo
 
 ![architecture](../architecture-microservices.png)
-
-
-
 
 ## Consequences
 
