@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/user"
@@ -19,14 +20,14 @@ func main() {
 	// Create the "authorized_keys" file if it doesn't exist
 	err := createAuthorizedKeysFile(authorizedKeysFile)
 	if err != nil {
-		fmt.Printf("Error creating authorized_keys file: %s\n", err.Error())
+		log.Printf("Error creating authorized_keys file: %s\n", err.Error())
 		return
 	}
 
 	// Get the list of GitHub accounts from the organization
 	accounts, err := getOrganizationMembers(organization)
 	if err != nil {
-		fmt.Printf("Error getting organization members: %s\n", err.Error())
+		log.Printf("Error getting organization members: %s\n", err.Error())
 		return
 	}
 
@@ -34,15 +35,15 @@ func main() {
 	for _, account := range accounts {
 		keys, err := getPublicKeys(account)
 		if err != nil {
-			fmt.Printf("Error getting public keys for account %s: %s\n", account, err.Error())
+			log.Printf("Error getting public keys for account %s: %s\n", account, err.Error())
 			continue
 		}
 
 		err = appendKeysToFile(keys, account, authorizedKeysFile)
 		if err != nil {
-			fmt.Printf("Error writing public keys to file %s: %s\n", authorizedKeysFile, err.Error())
+			log.Printf("Error writing public keys to file %s: %s\n", authorizedKeysFile, err.Error())
 		} else {
-			fmt.Printf("Public keys for account %s successfully copied to file %s\n", account, authorizedKeysFile)
+			log.Printf("Public keys for account %s successfully copied to file %s\n", account, authorizedKeysFile)
 		}
 	}
 }
