@@ -2,7 +2,7 @@
 headscale_become: true
 headscale_become_user: root
 
-headscale_version: v0.18.0
+headscale_version: v0.18.0 #this is an old version at the time of writing the new version is v0.22.3
 headscale_binary: headscale_0.18.0_linux_amd64
 # yamllint disable-line rule:line-length
 headscale_tarball_sha256: eedaff1af1e79b10a2ab7256118600b3b6528604be1c8c32d851a32bf3c48cea
