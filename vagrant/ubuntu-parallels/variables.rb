@@ -1,5 +1,5 @@
-$box_name = "ubuntu/jammy64"
-$box_version = "20230518.0.0"
+$box_name = "generic/ubuntu2010"
+$box_version = "4.2.16"
 $memory = 1024
 $provider = "parallels"
 $network_to_bridge = "en0: Wi-Fi"
