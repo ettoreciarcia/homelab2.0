@@ -1,0 +1,81 @@
+# ---
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: minio-logging
+#   namespace: logging
+# spec:
+#   template:
+#     spec:
+#       nodeSelector:
+#         node.kubernetes.io/role: "infra"
+#       tolerations:
+#         - key: node.kubernetes.io/role
+#           value: infra
+#           operator: Equal
+#           effect: NoSchedule
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: logging-operator
+#   namespace: logging
+# spec:
+#   template:
+#     spec:
+#       nodeSelector:
+#         node.kubernetes.io/role: "infra"
+#       tolerations:
+#         - key: node.kubernetes.io/role
+#           value: infra
+#           operator: Equal
+#           effect: NoSchedule
+
+# apiVersion: apps/v1
+# kind: StatefulSet
+# metadata:
+#   name: opensearch-cluster-master
+#   namespace: logging
+# spec:
+#   template:
+#     spec:
+#       nodeSelector:
+#         node.kubernetes.io/role: "infra"
+#       tolerations:
+#         - key: node.kubernetes.io/role
+#           value: infra
+#           operator: Equal
+#           effect: NoSchedule
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: opensearch-dashboards
+#   namespace: logging
+# spec:
+#   template:
+#     spec:
+#       nodeSelector:
+#         node.kubernetes.io/role: "infra"
+#       tolerations:
+#         - key: node.kubernetes.io/role
+#           value: infra
+#           operator: Equal
+#           effect: NoSchedule
+# ---
+# apiVersion: batch/v1
+# kind: CronJob
+# metadata:
+#   name: index-patterns-cronjob
+#   namespace: logging
+# spec:
+#   jobTemplate:
+#     spec:
+#       template:
+#         spec:
+#           nodeSelector:
+#             node.kubernetes.io/role: infra
+#           tolerations:
+#             - effect: NoSchedule
+#               key: node.kubernetes.io/role
+#               value: infra
