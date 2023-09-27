@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   # Ingress
   - ../../../vendor/katalog/ingress/forecastle
+  - resources/ingress.yml

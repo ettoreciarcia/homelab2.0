@@ -1,0 +1,31 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+- op: "add"
+  path: "/spec/match"
+  value:
+    excludedNamespaces:
+      - kube-system
+      - logging
+      - monitoring
+      - ingress-nginx
+      - cert-manager
+      - tigera-operator
+      - calico-system
+      - calico-api
+      - vmware-system-csi
+      - pomerium
+    kinds:
+      - apiGroups: ["batch", "extensions", "apps", ""]
+        kinds:
+          [
+            "Deployment",
+            "Pod",
+            "CronJob",
+            "Job",
+            "StatefulSet",
+            "DaemonSet",
+            "ConfigMap",
+            "Service",
+          ]

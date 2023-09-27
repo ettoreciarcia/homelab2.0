@@ -14,3 +14,31 @@ resources:
   - ../../../vendor/katalog/monitoring/kubeadm-sm
   - ../../../vendor/katalog/monitoring/node-exporter
   - ../../../vendor/katalog/monitoring/alertmanager-operated
+  # - patches/infra-scheduling.yml
+
+patchesStrategicMerge:
+- |-
+  apiVersion: monitoring.coreos.com/v1
+  kind: Prometheus
+  metadata:
+    name: k8s
+    namespace: monitoring
+  spec:
+    image: registry.sighup.io/fury/prometheus/prometheus:v2.41.0
+    replicas: 1
+    resources:
+      requests:
+        cpu: 500m
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+    retention: 1d
+    retentionSize: 5GiB
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi

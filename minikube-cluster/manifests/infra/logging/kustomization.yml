@@ -14,3 +14,5 @@ resources:
 patchesStrategicMerge:
   - patches/infra-scheduling.yml
   - patches/minio-replicas.yml
+  - patches/resize-pvc-opensearch.yml
+  - patches/resize-pvc-minio.yml

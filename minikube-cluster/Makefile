@@ -1,20 +1,36 @@
-.PHONY: init delete apply-infra delete-infra apply-logging delete-logging apply-monitoring delete-monitoring
+.PHONY: init-cluster
 init-cluster:
-	minikube start --vm-driver=parallels --kubernetes-version v1.25.0 --memory=4096m --cpus=2 --nodes=3
+	minikube start --vm-driver=parallels --kubernetes-version v1.25.8 --memory=8192m --cpus=4
+
+.PHONY: download-module
+download-module:
+	furyctl vendor -H
+
+.PHONY: delete-cluster
 delete-cluster: 
 	minikube delete
+
+.PHONY: pause-cluster
 pause-cluster:
 	minikube pause
+
+.PHONY: unpause-cluster
 unpause-cluster:
 	minikube unpause
-apply-logging:
-	kustomize build manifests/infra | kubectl apply -f -
-apply-monitoring: 
-	kustomize build manifests/infra/monitoring | kubectl apply -f - --server-side --force-conflicts
-delete-logging:
+
+.PHONY: apply-infra
+apply-infra:
+	kustomize build manifests/infra | kubectl apply -f - --server-side --force-conflicts
+
+.PHONY: delete-infra
+delete-infra:
 	kustomize build manifests/infra | kubectl delete -f -
-delete-monitoring:
-	kustomize build manifests/infra/monitoring | kubectl delete -f -
-delete-infra: delete-logging delete-monitoring
+
+.PHONY: setup
+setup: init-cluster download-module apply-infra
+
+
+
+
 
 

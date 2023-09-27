@@ -1,0 +1,41 @@
+# Copyright (c) 2017-present SIGHUP s.r.l All rights reserved.
+# Use of this source code is governed by a BSD-style
+# license that can be found in the LICENSE file.
+
+---
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8sprotectednamespace
+  annotations:
+    description: >-
+      Allows protecting a namespace from deletion. The rule will deny all the
+      namespace deletion requests except when the namespace has the annotation
+      "opa.sighup.io/indelible-ns" == "no"
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sProtectedNamespace
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sprotectednamespace
+        is_delete_or_audit {
+            operation := input.review.operation
+            operation == "DELETE"
+        }
+        is_delete_or_audit {
+            # When the constraint is run by the audit process input.review is not set
+            input.review.operation == ""
+        }
+
+        violation[{"msg": msg}] {
+          name := input.review.object.metadata.name
+          kind := input.review.object.kind
+          operation :=  input.review.operation
+          kind == "Namespace"
+          is_delete_or_audit
+          not input.review.object.metadata.annotations["opa.sighup.io/indelible-ns"] == "no"
+          msg := sprintf("the namespace '%s' is protected, so it cannot be deleted. Add an annotation 'opa.sighup.io/indelible-ns=no' to it to unprotect it.", [name])
+        }

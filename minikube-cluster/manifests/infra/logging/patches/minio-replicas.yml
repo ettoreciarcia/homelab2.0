@@ -4,5 +4,4 @@ metadata:
   name: minio-logging
   namespace: "logging"
 spec:
-  replicas: 2
-  
+  replicas: 1

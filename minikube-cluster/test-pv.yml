@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: testing-dynamic-provisioning-pv
+  namespace: default
+spec:
+  serviceName: "testing-dynamic-provisioning-pv"
+  replicas: 3 # Specifica il numero di repliche desiderate
+  selector:
+    matchLabels:
+      app: testing-dynamic-provisioning-pv
+  template:
+    metadata:
+      labels:
+        app: testing-dynamic-provisioning-pv
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:alpine # Utilizziamo l'immagine Alpine con Nginx
+        ports:
+        - containerPort: 80 # Porta del tuo contenitore
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data # Percorso di montaggio del volume nel contenitore
+  volumeClaimTemplates:
+  - metadata:
+      name: data-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ] # Modalità di accesso al PVC
+      storageClassName: vsphere # Nome della StorageClass
+      resources:
+        requests:
+          storage: 1Gi # Dimensione richiesta per il PVC
+
